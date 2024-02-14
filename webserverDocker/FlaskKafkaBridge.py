@@ -1,20 +1,35 @@
 import os
+import time
 from flask import Flask, request
-from confluent_kafka import Producer
+from kafka import KafkaProducer
 
-# Read bootstrap servers from environment variables
-bootstrap_servers = os.getenv('BOOTSTRAP_SERVERS')
+BOOTSTRAP_SERVERS = os.environ.get('BOOTSTRAP_SERVERS', '192.168.1.241:9091,192.168.1.241:9092,192.168.1.241:9093').split(',')
 
-# Initialize Kafka producer
-p = Producer({'bootstrap.servers': bootstrap_servers})
+def setup_producer():
+    try:
+        producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVERS)
+        return producer
+    except Exception as e:
+        if e == 'NoBrokersAvailable':
+            print('waiting for brokers to become available')
+        return 'not-ready'
+
+print('setting up producer, checking if brokers are available')
+producer='not-ready'
+
+while producer == 'not-ready':
+    print('brokers not available yet')
+    time.sleep(5)
+    producer = setup_producer()
+
+print('brokers are available and ready to produce messages')
 
 app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def receive_frame():
     frame_data = request.data
-    p.produce('webcam_topic', frame_data)
-
+    producer.send('webcam_topic', frame_data)
     return '', 204
 
 if __name__ == '__main__':
