@@ -13,14 +13,8 @@ def receive_frame():
     # Receive frame from HTTP request
     frame_data = request.data
 
-    # Convert frame data back to numpy array
-    frame = np.frombuffer(frame_data, dtype=np.uint8)
-
-    # Decode frame as JPEG
-    frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-
     # Send frame to Kafka as bytes
-    p.produce('webcam_topic', frame.tobytes())
+    p.produce('webcam_topic', frame_data)
 
     return '', 204
 
