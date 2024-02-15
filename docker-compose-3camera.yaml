@@ -1,0 +1,22 @@
+version: '3'
+services:
+  camera-1:
+    build: .
+    container_name: camera-1
+    ports:
+      - "4000:80"
+    environment:
+      - URL=http://192.168.1.241:5000
+      - VIDEO_SOURCE=0
+    devices:
+      - /dev/video0:/dev/video0
+  camera-2:
+    build: .
+    container_name: camera-2
+    ports:
+      - "4000:80"
+    environment:
+      - URL=http://192.168.1.241:5000
+      - VIDEO_SOURCE=/data/video.webm
+    volumes:
+      - /home/dezs/projects/lastThesis/video/testVid1.webm:/data/video.webm

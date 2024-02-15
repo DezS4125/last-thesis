@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  flask-kafka-producer-1:
+  flask-kafka-producer:
     image: flask-kafka-bridge
-    container_name: flask-kafka-producer-1
+    container_name: flask-kafka-producer
     depends_on:
       - broker-1
       - broker-2
@@ -14,35 +14,6 @@ services:
       - BOOTSTRAP_SERVERS=broker-1:29091,broker-2:29092,broker-3:29093
     networks:
       - kafka
-
-  flask-kafka-producer-2:
-    image: flask-kafka-bridge
-    container_name: flask-kafka-producer-2
-    depends_on:
-      - broker-1
-      - broker-2
-      - broker-3
-    ports:
-      - "5001:5000"
-    environment:
-      - BOOTSTRAP_SERVERS=broker-1:29091,broker-2:29092,broker-3:29093
-    networks:
-      - kafka
-
-  flask-kafka-producer-3:
-    image: flask-kafka-bridge
-    container_name: flask-kafka-producer-3
-    depends_on:
-      - broker-1
-      - broker-2
-      - broker-3
-    ports:
-      - "5002:5000"
-    environment:
-      - BOOTSTRAP_SERVERS=broker-1:29091,broker-2:29092,broker-3:29093
-    networks:
-      - kafka
-
   zookeeper:
     platform: linux/amd64
     image: confluentinc/cp-zookeeper:6.1.0
