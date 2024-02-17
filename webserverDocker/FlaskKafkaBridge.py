@@ -28,8 +28,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def receive_frame():
-    frame_data = request.data
-    producer.send('webcam_topic', frame_data)
+    frame_bytes = request.data
+    kafka_topic = request.headers.get('kafka-topic')
+    print("sending to kafka topic: "+kafka_topic)
+    producer.send(kafka_topic, frame_bytes)
     return '', 204
 
 if __name__ == '__main__':

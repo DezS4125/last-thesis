@@ -1,22 +1,35 @@
 version: '3'
 services:
   camera-1:
-    build: .
+    build: /home/dezs/projects/lastThesis/videoStreamApp
     container_name: camera-1
     ports:
       - "4000:80"
     environment:
       - URL=http://192.168.1.241:5000
       - VIDEO_SOURCE=0
+      - KAFKA_TOPIC=video-stream-1
     devices:
       - /dev/video0:/dev/video0
   camera-2:
-    build: .
+    build: /home/dezs/projects/lastThesis/videoStreamApp
     container_name: camera-2
     ports:
-      - "4000:80"
+      - "4001:80"
     environment:
       - URL=http://192.168.1.241:5000
       - VIDEO_SOURCE=/data/video.webm
+      - KAFKA_TOPIC=video-stream-2
     volumes:
       - /home/dezs/projects/lastThesis/video/testVid1.webm:/data/video.webm
+  camera-3:
+    build: /home/dezs/projects/lastThesis/videoStreamApp
+    container_name: camera-3
+    ports:
+      - "4002:80"
+    environment:
+      - URL=http://192.168.1.241:5000
+      - VIDEO_SOURCE=/data/video.webm
+      - KAFKA_TOPIC=video-stream-3
+    volumes:
+      - /home/dezs/projects/lastThesis/video/testVid2.webm:/data/video.webm

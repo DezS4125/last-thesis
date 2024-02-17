@@ -4,8 +4,9 @@ import os
 import itertools
 
 # Get environment variables
-urls = os.getenv('URL').split(',')  # Assuming URLs are comma-separated
-video_source = os.getenv('VIDEO_SOURCE')
+urls = os.getenv('URL','http://192.168.1.241:5000').split(',')  # Assuming URLs are comma-separated
+video_source = os.getenv('VIDEO_SOURCE','0')
+kafka_topic = os.getenv('KAFKA_TOPIC','video-stream-1')
 
 # Check if VIDEO_SOURCE can be converted to an integer
 try:
@@ -28,9 +29,10 @@ while True:
 
     # Get the next URL from the iterator
     url = next(url_iterator)
+    headers = {'kafka-topic':kafka_topic}
 
     # Send frame to the selected server via HTTP
-    requests.post(url, data=buffer.tobytes())
+    requests.post(url, data=buffer.tobytes(),headers=headers)
 
 # When everything done, release the capture
 cap.release()
