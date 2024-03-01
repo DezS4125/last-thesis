@@ -7,7 +7,7 @@ services:
     ports:
       - "4000:80"
     environment:
-      - URL=http://192.168.1.241:5000,http://192.168.1.241:5001,http://192.168.1.241:5002
+      - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=0
       - KAFKA_TOPIC=video-stream-1
     devices:
@@ -19,7 +19,7 @@ services:
     ports:
       - "4001:80"
     environment:
-      - URL=http://192.168.1.241:5000,http://192.168.1.241:5001,http://192.168.1.241:5002
+      - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=/data/video.webm
       - KAFKA_TOPIC=video-stream-2
     volumes:
@@ -31,7 +31,7 @@ services:
     ports:
       - "4002:80"
     environment:
-      - URL=http://192.168.1.241:5000,http://192.168.1.241:5001,http://192.168.1.241:5002
+      - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=/data/video.webm
       - KAFKA_TOPIC=video-stream-3
     volumes:

@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 # Set up the Kafka consumer
-consumer = KafkaConsumer('video-stream-3', bootstrap_servers='192.168.1.241:9092')
+consumer = KafkaConsumer('video-stream-2', bootstrap_servers='192.168.1.241:9092')
 
 for message in consumer:
     # The message value is the bytes of the image
