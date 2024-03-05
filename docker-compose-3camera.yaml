@@ -10,8 +10,11 @@ services:
       - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=0
       - KAFKA_TOPIC=video-stream-1
+      - MAX_FPS=2
     devices:
       - /dev/video0:/dev/video0
+    volumes:
+      - /home/dezs/projects/lastThesis/videoStreamApp/videoToHttps.py:/script/videoToHttps.py
   camera-2:
     build: /home/dezs/projects/lastThesis/videoStreamApp
     image: camera
@@ -22,8 +25,10 @@ services:
       - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=/data/video.webm
       - KAFKA_TOPIC=video-stream-2
+      - MAX_FPS=2
     volumes:
       - /home/dezs/projects/lastThesis/video/testVid1.webm:/data/video.webm
+      - /home/dezs/projects/lastThesis/videoStreamApp/videoToHttps.py:/script/videoToHttps.py
   camera-3:
     build: /home/dezs/projects/lastThesis/videoStreamApp
     image: camera
@@ -34,5 +39,7 @@ services:
       - URL=http://192.168.1.241:80
       - VIDEO_SOURCE=/data/video.webm
       - KAFKA_TOPIC=video-stream-3
+      - MAX_FPS=2
     volumes:
       - /home/dezs/projects/lastThesis/video/testVid2.webm:/data/video.webm
+      - /home/dezs/projects/lastThesis/videoStreamApp/videoToHttps.py:/script/videoToHttps.py
