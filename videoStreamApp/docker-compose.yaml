@@ -10,3 +10,4 @@ services:
       - VIDEO_SOURCE=/data/video.webm
     volumes:
       - /home/dezs/projects/lastThesis/video/testVid1.webm:/data/video.webm
+      - /home/dezs/projects/lastThesis/videoStreamApp/videoToHttps.py:/script/videoToHttps.py

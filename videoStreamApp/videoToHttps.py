@@ -2,11 +2,20 @@ import cv2
 import requests
 import os
 import itertools
+import time
 
 # Get environment variables
 urls = os.getenv('URL','http://192.168.1.241:5000').split(',')  # Assuming URLs are comma-separated
 video_source = os.getenv('VIDEO_SOURCE','0')
 kafka_topic = os.getenv('KAFKA_TOPIC','video-stream-1')
+max_fps = int(os.getenv('MAX_FPS','60'))
+
+print('URLs: ')
+for url in urls:
+    print('- ' + url)
+print('Video Source: ', video_source)
+print('Kafka Topic: ', kafka_topic)
+print('Max FPS: ', max_fps)
 
 # Check if VIDEO_SOURCE can be converted to an integer
 try:
@@ -33,6 +42,9 @@ while True:
 
     # Send frame to the selected server via HTTP
     requests.post(url, data=buffer.tobytes(),headers=headers)
+    
+    print(max_fps)
+    time.sleep(1/max_fps)
 
 # When everything done, release the capture
 cap.release()
