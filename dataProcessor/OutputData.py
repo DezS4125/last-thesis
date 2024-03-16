@@ -1,4 +1,4 @@
-class OutputData{
-    data1
-    data2
-}
+class OutputData:
+    def __init__(self, data1, data2):
+        self.data1 = data1
+        self.data2 = data2

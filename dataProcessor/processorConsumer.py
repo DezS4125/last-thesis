@@ -3,12 +3,14 @@ from kafka import KafkaConsumer
 import cv2
 import numpy as np
 
-topics = ['video-stream-1', 'video-stream-2', 'video-stream-3']
+# topics = ['video-stream-1', 'video-stream-2', 'video-stream-3']
+topics = ['video-stream-1']
 
 # Set up the Kafka consumer
-consumer = KafkaConsumer(topics, bootstrap_servers='192.168.1.241:9092')
+consumer = KafkaConsumer(*topics, bootstrap_servers='192.168.1.241:9092')
 
 for message in consumer:
+    print(f'Received message from topic: {message.topic}')
     # The message value is the bytes of the image
     image_bytes = message.value
 
